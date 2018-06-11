@@ -1,0 +1,24 @@
+spring:
+  profiles:
+    active: dev
+  http:       # 解决中文乱码
+    encoding:
+      charset: UTF-8
+      force: true
+  mvc:        #视图解析
+    view:
+      prefix: /
+      suffix: .jsp
+  datasource:     #数据源的配置
+    type: com.alibaba.druid.pool.DruidDataSource
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/cmfz
+mybatis:
+  mapper-locations: com/baizhi/mappers/*.xml
+  type-aliases-package: com.baizhi.entity
+server:
+  jsp-servlet:
+    init-parameters:
+      development:  true

@@ -1,0 +1,48 @@
+[{
+  "id": "customer",
+  "text": "请选择",
+  "iconCls": "icon-edit",
+  "state": "open",
+  "children":[
+    {
+      "text": "编号",
+      "id": "id"
+    },{
+      "text":"手机号",
+      "id":"phoneNum"
+    },{
+      "text":"密码",
+      "id":"password"
+    },{
+      "text":"盐",
+      "id":"salt"
+    },{
+      "text":"法号",
+      "id":"dhamaname"
+    },{
+      "text":"姓名",
+      "id":"userName"
+    },{
+      "text":"性别",
+      "id":"sex"
+    },{
+      "text":"省份",
+      "id":"province"
+    },{
+      "text":"城市",
+      "id":"city"
+    },{
+      "text":"简述",
+      "id":"sign"
+    },{
+      "text":"状态",
+      "id":"status"
+    },{
+      "text":"注册时间",
+      "id":"date"
+    },{
+      "text":"上师",
+      "id":"greatId"
+    }
+  ]
+}]

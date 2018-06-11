@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--包扫描-->
+    <context:component-scan base-package="com.baizhi.serviceimpl"/>
+
+    <!--数据源-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="username" value="root"/>
+        <property name="password" value="root"/>
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/cmfz"/>
+    </bean>
+
+    <!--sqlSessionFactoryBean-->
+    <bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="typeAliasesPackage" value="com.baizhi.entity"/>
+        <property name="mapperLocations" value="classpath:com/baizhi/mappers/*.xml"/>
+    </bean>
+
+    <!--mapperLocation-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="sessionFactory"/>
+        <property name="basePackage" value="com.baizhi.dao"/>
+    </bean>
+
+    <!--事务-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+     </bean>
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <!--通知-->
+    <bean id="aroundMethod" class="com.baizhi.aop.AroundMethod"></bean>
+    <!--   组装切面  切入点+通知
+        proxy-target-class：
+        创建代理类的方式jdk：基于接口 false
+        创建带理类的方式cglib：基于实现类的  true   注解应该加在实现类中
+     -->
+    <aop:config proxy-target-class="true">
+        <!--annotation做切入点 以cglib的方式基于接口创建   注解加在实现类上-->
+        <aop:pointcut id="p" expression="@annotation(com.baizhi.aop.LogAnnotation)"/>
+        <aop:advisor advice-ref="aroundMethod" pointcut-ref="p" />
+    </aop:config>
+</beans>

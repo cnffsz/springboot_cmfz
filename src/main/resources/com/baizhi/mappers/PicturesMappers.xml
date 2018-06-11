@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.PicturesDAO">
+    <select id="queryCount" resultType="Integer">
+        SELECT count(*) from c_pictures
+    </select>
+    <select id="queryAllPictures" resultType="Pictures">
+        SELECT id,title,imgPath,ins,sta,date from c_pictures limit #{start},#{end}
+    </select>
+    <update id="modifyStatus">
+        UPDATE c_pictures SET sta=#{sta} WHERE id=#{id}
+    </update>
+    <delete id="reomveRow">
+        DELETE  FROM  c_pictures WHERE id=#{id}
+    </delete>
+    <insert id="save" parameterType="Pictures">
+        INSERT into c_pictures(title,imgPath,ins,sta,date) VALUES (#{title},#{imgPath},#{ins},#{sta},now())
+    </insert>
+
+</mapper>

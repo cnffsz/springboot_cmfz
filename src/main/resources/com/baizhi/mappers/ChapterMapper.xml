@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.ChapterDAO">
+    <insert id="insertChapter">
+        INSERT into c_chapter VALUES (#{id},#{title},#{musicSize},#{duration},#{downPath},now(),#{albumId})
+    </insert>
+
+    <select id="queryByAlbumId" resultType="Chapter">
+        SELECT * from c_chapter where albumid = #{id}
+    </select>
+</mapper>

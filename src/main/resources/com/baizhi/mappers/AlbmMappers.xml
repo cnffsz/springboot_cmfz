@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.AlbumDAO">
+    <select id="queryCount" resultType="Integer">
+        select count(*) from c_album
+    </select>
+
+    <resultMap id="a1" type="Album">
+        <id column="id" property="id" ></id>
+        <result column="title" property="title"/>
+        <result column="coverImg" property="coverImg"/>
+        <result column="count"    property="count"/>
+        <result column="score" property="score"/>
+        <result column="author" property="author"/>
+        <result column="broadCast" property="broadCast"/>
+        <result column="brief" property="brief"/>
+        <result column="date" property="date"/>
+        <collection property="children" ofType="Chapter">
+            <id column="c1id" property="id"/>
+            <result column="c1title" property="title"/>
+            <result column="c1musicSize" property="musicSize"/>
+            <result column="c1duration" property="duration"/>
+            <result column="c1downpath" property="downPath"/>
+            <result column="c1uploadDate" property="uploadDate"/>
+        </collection>
+    </resultMap>
+    <select id="queryAll" resultMap="a1">
+        SELECT c.id,c.title,c.coverImg,c.count,c.score,c.author,c.broadCast,c.brief,c.date,
+        c1.id c1id,c1.title c1title,c1.music_size c1musicSize,c1.duration c1duration,c1.downpath c1downpath,c1.uploadDate c1uploadDate
+        from c_album c
+        LEFT JOIN  c_chapter c1
+        on c.id = c1.albumid limit #{start},#{rows}
+    </select>
+    <insert id="insertAlbum">
+        INSERT INTO c_album
+        VALUES(#{id},#{title},#{coverImg},#{count},#{score},#{author},#{broadCast},#{brief},now())
+    </insert>
+    <select id="queryCountById" resultType="String">
+        select count from c_album where id=#{id}
+    </select>
+    <update id="updateCount">
+        update c_album SET count=#{count} where id=#{id}
+    </update>
+
+    <select id="queryById" resultType="Album">
+        SELECT * FROM c_album where id = #{id}
+    </select>
+
+</mapper>

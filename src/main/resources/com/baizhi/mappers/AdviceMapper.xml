@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.AdviceDAO" >
+  <resultMap id="BaseResultMap" type="com.baizhi.entity.Advice" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="advice_name" property="adviceName" jdbcType="VARCHAR" />
+    <result column="date" property="date" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, username, advice_name, date
+  </sql>
+  <select id="queryAll" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from c_advice limit #{start},#{rows}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from c_advice
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.baizhi.entity.Advice" >
+    insert into c_advice (id, username, advice_name, 
+      date)
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{adviceName,jdbcType=VARCHAR}, 
+      #{date,jdbcType=VARCHAR})
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.baizhi.entity.Advice" >
+    insert into c_advice
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="adviceName != null" >
+        advice_name,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="adviceName != null" >
+        #{adviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.baizhi.entity.Advice" >
+    update c_advice
+    <set >
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="adviceName != null" >
+        advice_name = #{adviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.baizhi.entity.Advice" >
+    update c_advice
+    set username = #{username,jdbcType=VARCHAR},
+      advice_name = #{adviceName,jdbcType=VARCHAR},
+      date = #{date,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="queryCount" resultType="Integer">
+    SELECT count(*) from c_advice
+  </select>
+
+</mapper>
