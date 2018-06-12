@@ -13,11 +13,9 @@ import javax.servlet.http.HttpSession;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 public class AroundMethod implements MethodInterceptor{
     @Autowired
     private AdviceDAO adviceDAO;
-
     public Object invoke(MethodInvocation invocation) throws Throwable {
         //什么人
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
@@ -50,7 +48,6 @@ public class AroundMethod implements MethodInterceptor{
             Advice advice = new Advice(null,admin.getUsername(),name, new SimpleDateFormat("yyyy-MM-dd").format(date));
             adviceDAO.insert(advice);
         }
-
         return proceed;
     }
 }
