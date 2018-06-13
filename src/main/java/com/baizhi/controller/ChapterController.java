@@ -4,8 +4,10 @@ import com.baizhi.service.ChapterService;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletOutputStream;
@@ -15,13 +17,13 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
-@Controller
-@RequestMapping("/chapter")
+@RestController
+@RequestMapping(value = "/chapter")
 public class ChapterController {
      @Autowired
     private ChapterService chapterService;
     //添加章节
-    @RequestMapping(value = "/add",method = RequestMethod.POST)
+    @RequestMapping(value ="/add")
     public void addChapter(MultipartFile addFile, String albumId, HttpServletRequest request){
         chapterService.insertChapter(addFile,albumId,request);
     }

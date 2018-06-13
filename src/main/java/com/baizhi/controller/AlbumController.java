@@ -45,8 +45,4 @@ public class AlbumController {
         album.setCoverImg(url+"/"+newName);
         albumService.saveAlbum(album);
     }
-    /*添加章节*/
-    @RequestMapping(value="saveChapter",method = RequestMethod.POST)
-    public void saveChapter(MultipartFile addFile,String id){
-    }
 }

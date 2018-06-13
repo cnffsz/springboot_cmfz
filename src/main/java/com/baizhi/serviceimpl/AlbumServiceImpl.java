@@ -1,5 +1,6 @@
 package com.baizhi.serviceimpl;
 
+import com.baizhi.aop.LogAnnotation;
 import com.baizhi.dao.AlbumDAO;
 import com.baizhi.dao.ChapterDAO;
 import com.baizhi.entity.Album;
@@ -33,7 +34,8 @@ public class AlbumServiceImpl implements AlbumService {
         int start = (page - 1) * rows;
         return albumDAO.queryAll(start, rows);
     }
-
+    //添加专辑
+    @LogAnnotation(name = "添加专辑")
     public void saveAlbum(Album album) {
         String id = UUID.randomUUID().toString();
         album.setId(id);

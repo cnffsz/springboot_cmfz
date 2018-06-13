@@ -7,6 +7,8 @@ import com.baizhi.entity.Chapter;
 import com.baizhi.entity.FileName;
 import com.baizhi.service.ChapterService;
 import com.baizhi.utils.UploadFileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +20,7 @@ import java.util.UUID;
 @Service
 @Transactional
 public class ChapterServiceImpl implements ChapterService {
+    Logger logger = LoggerFactory.getLogger(ChapterServiceImpl.class);
     @Autowired
     private ChapterDAO chapterDAO;
     @Autowired
@@ -38,6 +41,7 @@ public class ChapterServiceImpl implements ChapterService {
         //改变集数
         String s = albumDAO.queryCountById(albumId);
         Integer count = Integer.parseInt(s);
+        logger.error("count",count);
         String count1 = (count+1)+"";
         albumDAO.updateCount(albumId,count1);
     }
